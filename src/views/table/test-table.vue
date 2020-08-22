@@ -15,7 +15,7 @@
         Search
       </el-button>
       <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
-        Add
+        新增
       </el-button>
       <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">
         Export
@@ -114,7 +114,7 @@
         </el-form-item>
         <el-form-item label="Status">
           <el-select v-model="temp.status" class="filter-item" placeholder="Please select">
-            <el-option v-for="item in statusOptions" :key="item" :label="item" :value="item" />
+            <el-option v-for="item in statusTypeOptions" :key="item.key" :label="item.display_name" :value="item.key" />
           </el-select>
         </el-form-item>
         <el-form-item label="Imp">
@@ -159,6 +159,12 @@ const calendarTypeOptions = [
   { key: 'EU', display_name: 'Eurozone' }
 ]
 
+const statusTypeOptions = [
+  { key: '1', display_name: 'published' },
+  { key: '2', display_name: 'draft' },
+  { key: '0', display_name: 'deleted' }
+]
+
 // arr to obj, such as { CN : "China", US : "USA" }
 const calendarTypeKeyValue = calendarTypeOptions.reduce((acc, cur) => {
   acc[cur.key] = cur.display_name
@@ -198,6 +204,7 @@ export default {
       },
       importanceOptions: [1, 2, 3],
       calendarTypeOptions,
+      statusTypeOptions,
       sortOptions: [{ label: 'ID Ascending', key: '+id' }, { label: 'ID Descending', key: '-id' }],
       statusOptions: ['published', 'draft', 'deleted'],
       showReviewer: false,
@@ -213,8 +220,8 @@ export default {
       dialogFormVisible: false,
       dialogStatus: '',
       textMap: {
-        update: 'Edit',
-        create: 'Create'
+        update: '修改',
+        create: '新增'
       },
       dialogPvVisible: false,
       pvData: [],
